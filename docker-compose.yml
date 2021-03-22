@@ -1,0 +1,11 @@
+version: '3.7'
+services:
+  release-npm-gh-action:
+    container_name: release-npm-gh-action
+    image: node:12-slim
+    working_dir: /app
+    volumes:
+      - ./:/app
+    environment:
+      DEBUG: "*,-mocha*,-eslint*,-typescript-eslint*,-babel*"
+    command: tail -f /dev/null
