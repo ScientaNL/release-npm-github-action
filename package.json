@@ -1,16 +1,16 @@
 {
 	"name": "gh-action-release-npm",
-	"version": "0.0.1",
+	"version": "1.0.2",
 	"description": "Github Action to publish an npm-package for a github release",
 	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"lint": "npx eslint --cache src",
-		"build": "npx ncc build src/*.js -m",
+		"lint": "eslint --cache src",
+		"build": "rm -rf ./dist && ncc build src/index.js -m",
 		"lint-build": "npm run lint && npm run build"
 	},
-	"author": "SCienta",
-	"license": "SEE LICENSE IN LICENSE",
+	"author": "Scienta",
+	"license": "MIT",
 	"dependencies": {
 		"@actions/core": "^1.2.6",
 		"@actions/exec": "^1.0.4",
@@ -22,7 +22,7 @@
 		"string-template": "^1.0.0"
 	},
 	"devDependencies": {
-		"@vercel/ncc": "^0.25.1",
+		"@vercel/ncc": "^0.27.0",
 		"eslint": "^7.21.0",
 		"babel-eslint": "^10.1.0"
 	}
