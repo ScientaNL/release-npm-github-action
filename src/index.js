@@ -8,7 +8,7 @@ import {npm} from './npm';
 
 const dryRun = Boolean(getInput('dry-run'));
 const githubToken = getInput('github-token');
-const npmToken = getInput('npm-token') ?? '';
+const npmToken = getInput('npm-token') || '';
 const githubUsername = getInput('github-username');
 const githubRepoOwner = getInput('repository-owner') || context.repo.owner;
 const options = {
