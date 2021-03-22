@@ -8,6 +8,7 @@ import {npm} from './npm';
 
 const dryRun = Boolean(getInput('dry-run'));
 const githubToken = getInput('github-token');
+const npmToken = getInput('npm-token') ?? '';
 const githubUsername = getInput('github-username');
 const githubRepoOwner = getInput('repository-owner') || context.repo.owner;
 const options = {
@@ -42,8 +43,8 @@ try {
 	const npmOptions = parseJson(getInput('npm-options'));
 	options.npm = { ...options.npm, ...npmOptions };
 	options.npm.registry = new URL(options.npm.registry);
-	options.npm.token = getInput('npm-token');
-	if (!options.npm.token) {
+	options.npm.token = npmToken.trim();
+	if (!options.npm.token.length) {
 		throw new Error('a valid npm token must be present');
 	}
 } catch (error) {
