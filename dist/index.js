@@ -10778,6 +10778,7 @@ try {
 	}
 } catch (error) {
 	(0,core.setFailed)(`Failed to parse jsonOpts ${error.message}`);
+	process.exit(1);
 }
 
 try {
@@ -10791,6 +10792,7 @@ try {
 	}
 } catch (error) {
 	(0,core.setFailed)(`Failed to parse pr-labels ${error.message}`);
+	process.exit(1);
 }
 
 (async () => {

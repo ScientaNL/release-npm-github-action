@@ -49,6 +49,7 @@ try {
 	}
 } catch (error) {
 	setFailed(`Failed to parse jsonOpts ${error.message}`);
+	process.exit(1);
 }
 
 try {
@@ -62,6 +63,7 @@ try {
 	}
 } catch (error) {
 	setFailed(`Failed to parse pr-labels ${error.message}`);
+	process.exit(1);
 }
 
 (async () => {
