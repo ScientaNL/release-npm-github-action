@@ -1,0 +1,52 @@
+name: NPM version publish on github release
+description: Github Action to publish an npm-package for a github release
+inputs:
+  github-token:
+    description: 'Github Actions Token or Personal Access Token (PAT)'
+    required: true
+    default: ${{ github.token }}
+  npm-token:
+    description: 'NPM Token or for publishing the package'
+    required: true
+  dry-run:
+    description: 'Do not change git remote and do not publish to npm'
+    required: false
+    default: ''
+  push-or-pr-changes:
+    description: 'Do changes need to be pushed or PR-ed to the tagged branch? [push|pr]'
+    required: false
+    default: 'push'
+  package-json:
+    description: 'Directory that contains the package.json file'
+    required: false
+    default: './package.json'
+  npm-options:
+    description: Json configuration options (merged with file configuration and defaults)
+    required: false
+    default: '{}'
+  github-username:
+    description: Set the Github username to use for creating/pushing updates.
+    required: true
+    default: ${{ github.actor }}
+  repository-owner:
+    description: 'Owner of the repository'
+    required: false
+  git-user-name:
+    description: 'Username for the version commit'
+    required: false
+  git-user-email:
+    description: 'User email for the version commit'
+    required: false
+  pr-title:
+    description: 'Title template for the PR that is published to the tagged branch'
+    required: false
+  pr-body:
+    description: 'Body template for the PR that is published to the tagged branch'
+    required: false
+  pr-labels:
+    description: 'Json array with labels for the PR that is published to the tagged branch'
+    required: false
+
+runs:
+  using: 'node12'
+  main: ./dist/index.js

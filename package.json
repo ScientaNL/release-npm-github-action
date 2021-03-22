@@ -1,0 +1,29 @@
+{
+	"name": "gh-action-release-npm",
+	"version": "0.0.1",
+	"description": "Github Action to publish an npm-package for a github release",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"lint": "npx eslint --cache src",
+		"build": "npx ncc build src/*.js -m",
+		"lint-build": "npm run lint && npm run build"
+	},
+	"author": "SCienta",
+	"license": "SEE LICENSE IN LICENSE",
+	"dependencies": {
+		"@actions/core": "^1.2.6",
+		"@actions/exec": "^1.0.4",
+		"@actions/github": "^4.0.0",
+		"actions-toolkit": "^6.0.1",
+		"json5": "^2.2.0",
+		"semver": "^7.3.4",
+		"read-package-json": "^3.0.1",
+		"string-template": "^1.0.0"
+	},
+	"devDependencies": {
+		"@vercel/ncc": "^0.25.1",
+		"eslint": "^7.21.0",
+		"babel-eslint": "^10.1.0"
+	}
+}

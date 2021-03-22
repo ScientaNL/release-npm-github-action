@@ -1,0 +1,38 @@
+{
+	"root": true,
+	"ignorePatterns": [],
+	"parser": "babel-eslint",
+	"rules": {
+		// https://eslint.org/docs/rules/
+		"require": "off",
+		"arrow-parens": "off",
+		"no-angle-bracket-type-assertion": "off",
+		"whitespace": "off",
+		"quotes": "off",
+		"ordered-imports": "off",
+		"one-variable-per-declaration": "off",
+		"no-unused-expressions": ["error", {"allowTernary":  true}],
+		"no-unused-vars": "off", // use typescript version instead
+		"no-shadowed-variable": "off",
+		"forin": "off",
+		"triple-equals": "off",
+		"object-literal-shorthand": "off",
+		"complexity": ["error",{"max": 20}],
+		"radix": "off",
+		"no-bitwise": "off",
+		"no-reference": "off",
+		"no-console": "off",
+		"indent": ["error", "tab", {"SwitchCase":  1, "ignoredNodes": ["*[parent.kind='constructor']"]}],
+		"object-literal-sort-keys": "off",
+		"interface-name": "off",
+		"no-trailing-whitespace": "off",
+		"array-type": "off",
+		"semi": "error",
+		"max-classes-per-file": "off",
+		"trailing-comma": "off",
+		"no-redundant-jsdoc": "off",
+		"no-inferrable-types": "off",
+		"no-switch-case-fallthrough": "off",
+		"no-fallthrough": ["error", {"commentPattern": "fall[\\s|\\-]?through"}]
+	}
+}
