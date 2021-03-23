@@ -34,10 +34,11 @@ export const github = {
 		if (!tagName || !fromBranch) {
 			throw new Error('Invalid tag or branch data for release, unable to re-tag');
 		}
+		info(`Release event from tag: ${tagName}, branch: ${fromBranch} with semver: ${version}`);
 		return {
 			tagName: tagName,
-			fromBranch: context.payload.release.target_commitish,
-			semVerTag: semverValid(version)
+			fromBranch: fromBranch,
+			semVerTag: version
 		};
 	},
 
