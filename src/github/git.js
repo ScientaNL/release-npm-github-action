@@ -20,13 +20,14 @@ export const git = {
 		message = message.trim().replace(/["]/g, "");
 		const filesString = files.join(' ');
 
-		info(`Adding and committing files: ${filesString}`);
+		info(`Checking status of files files: ${filesString}`);
 		const gitStatus = execSync(`git status -s ${filesString}`).toString();
 
 		if (!gitStatus) {
 			return false;
 		}
 
+		info(`Adding and committing files: ${filesString}`);
 		execSync(`git add ${filesString}`);
 		execSync(`git commit -m"${message}"`);
 
@@ -56,12 +57,12 @@ export const git = {
 	push(remote, refSpec, force, dryRun) {
 		const cmd = ['git', 'push', '-v'];
 
-		if (dryRun) {
-			cmd.push('--dry-run');
-		}
-
 		if (force) {
 			cmd.push('--force');
+		}
+
+		if (dryRun) {
+			cmd.push('--dry-run');
 		}
 
 		cmd.push(remote);

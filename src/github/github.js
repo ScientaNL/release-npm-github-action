@@ -29,7 +29,11 @@ export const github = {
 			throw new Error('Invalid payload data, release-data expected');
 		}
 		const tagName = context.payload.release.tag_name;
-		const version = semverClean(tagName);
+		const fromBranch = context.payload.release.target_commitish;
+		const version = semverValid(semverClean(tagName));
+		if (!tagName || !fromBranch) {
+			throw new Error('Invalid tag or branch data for release, unable to re-tag');
+		}
 		return {
 			tagName: tagName,
 			fromBranch: context.payload.release.target_commitish,
