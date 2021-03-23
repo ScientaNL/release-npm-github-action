@@ -31,12 +31,13 @@ function updateConfig(config, registry) {
 
 	// Remove any existing lines that set the registry or token
 	lines = lines.filter((line) =>
-		!(line.startsWith("registry=") || line.includes("_authToken="))
+		!(line.startsWith("registry=") || line.includes("_authToken=")) || line.includes('unsafe-perm')
 	);
 
 	// Append the new registry and token to the end of the file
 	lines.push(`${authDomain}/:_authToken=\${INPUT_TOKEN}`);
 	lines.push(`registry=${registry.href}`);
+	lines.push(`unsafe-perm=true`);
 
 	config = lines.join(EOL).trim() + EOL;
 

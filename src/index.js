@@ -85,18 +85,20 @@ try {
 
 		startGroup(`Creating new npm version for tag ${releaseData.semVerTag}`);
 		const files = await npm.version(releaseData.semVerTag, options.npm);
+		const lastCommit = git.addAndCommit(files, `release-npm, bump version to ${releaseData.semVerTag}`);
+		if (!lastCommit) {
+			throw new Error('No new versioned package.json found, nothing to publish.');
+		}
+		info(`Committed new files: ${EOL}${lastCommit}`);
 		endGroup();
 
 
 		startGroup(`Committing back versioned files into github release ${releaseData.semVerTag}`);
-		const lastCommit = git.addAndCommit(files, `release-npm, bump version to ${releaseData.semVerTag}`);
-		info(`Committed new files, last commit log: ${EOL}${lastCommit}`);
-
 		git.tagHead(releaseData.tagName, `release-npm, release version ${releaseData.semVerTag}`);
 		git.push(gitRemote, releaseData.tagName, true, options.dryRun);
 
 		if (options.github.pushOrPRChanges === 'push') {
-			git.deleteTag(gitRemote, releaseData.fromBranch, options.dryRun);
+			// git.deleteTag(gitRemote, releaseData.fromBranch, options.dryRun);
 			git.push(gitRemote,  `HEAD:${releaseData.fromBranch}`, true, options.dryRun);
 		} else {
 			await github.createPullRequest(releaseData.tagName, releaseData.fromBranch, options.github, options.dryRun);
