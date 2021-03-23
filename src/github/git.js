@@ -10,7 +10,7 @@ export const git = {
 		info(`Setting git email to ${options.gitUserEmail}`);
 		execSync(`git config user.email "${options.gitUserEmail}"`);
 
-		info(`Setting git remote to ${options.remoteRepo}`);
+		info(`Setting git remote [${remoteSlug}] to ${options.remoteRepo}`);
 		execSync(`git remote set-url origin ${options.remoteRepo}`);
 
 		return remoteSlug;
@@ -30,7 +30,7 @@ export const git = {
 		execSync(`git add ${filesString}`);
 		execSync(`git commit -m"${message}"`);
 
-		return true;
+		return execSync(`git log --name-status HEAD^..HEAD`).toString();
 	},
 
 	tagHead(tagName, message) {
@@ -39,8 +39,22 @@ export const git = {
 		execSync(`git tag -fa ${tagName} -m "${message}"`);
 	},
 
+	deleteTag(remote, refSpec, dryRun) {
+		const cmd = ['git', 'push', '--delete'];
+
+		if (dryRun) {
+			cmd.push('--dry-run');
+		}
+
+		cmd.push(remote);
+		cmd.push(refSpec);
+
+		info(`Deleting tag ref ${refSpec} from ${remote}`);
+		execSync(cmd.join(' '));
+	},
+
 	push(remote, refSpec, force, dryRun) {
-		const cmd = ['git', 'push'];
+		const cmd = ['git', 'push', '-v'];
 
 		if (dryRun) {
 			cmd.push('--dry-run');
