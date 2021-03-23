@@ -15,6 +15,38 @@ export const npm = {
 	/**
 	 * Publishes the specified package to NPM
 	 */
+	async install(options, ciMode) {
+		ciMode = ciMode == null ? true : !!ciMode;
+		// Update the NPM config with the specified registry and token
+		await setNpmConfig(options);
+
+		// Run "npm version" in the package.json directory
+		let cwd = resolve(dirname(options.packageJson));
+
+		try {
+			info(`Installing npm packages to run scripts and npm-command hooks`);
+
+			let cmd = ['npm', 'ci'];
+			if (!ciMode) {
+				cmd = ['npm', 'install', '--no-save', '--include=dev'];
+			}
+
+			// Get the environment variables to pass to NPM
+			let env = getNpmEnvironment(options.token);
+
+			execSync(cmd.join(' '), {
+				cwd: cwd,
+				env: env
+			});
+		} catch (error) {
+			ghError(error.message);
+			throw new Error(`Unable install packages.`);
+		}
+	},
+
+	/**
+	 * Publishes the specified package to NPM
+	 */
 	async version(newVersion, options) {
 		// Update the NPM config with the specified registry and token
 		await setNpmConfig(options);
