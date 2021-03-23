@@ -1,13 +1,14 @@
 {
 	"name": "gh-action-release-npm",
-	"version": "1.0.2",
+	"version": "1.0.4",
 	"description": "Github Action to publish an npm-package for a github release",
 	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"lint": "eslint --cache src",
 		"build": "rm -rf ./dist && ncc build src/index.js -m",
-		"lint-build": "npm run lint && npm run build"
+		"lint-build": "npm run lint && npm run build",
+		"release-version": "npm run lint-build && npm --no-git-tag-version --allow-same-version version"
 	},
 	"author": "Scienta",
 	"license": "MIT",

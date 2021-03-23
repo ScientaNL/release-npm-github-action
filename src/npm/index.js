@@ -29,7 +29,7 @@ export const npm = {
 
 		try {
 			info(`Updating npm package version to ${newVersion}`);
-			const cmd = ['npm', '--no-github-tag-version', '--allow-same-version', 'version'];
+			const cmd = ['npm', '--no-git-tag-version', '--allow-same-version', 'version'];
 
 			// Get the environment variables to pass to NPM
 			let env = getNpmEnvironment(options.token);

@@ -44,7 +44,6 @@ export const github = {
 		const repo = context.repo.repo;
 
 		head = `${owner}:${head}`;
-
 		const hasPR = !!(await octokit.pulls.list({owner, repo, head, base})).data.length;
 		const isIdentical = (await octokit.repos.compareCommits({owner, repo, base, head})).data.status === "identical";
 

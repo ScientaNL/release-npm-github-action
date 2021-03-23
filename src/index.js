@@ -1,8 +1,9 @@
+import {EOL} from "os";
+import { parse as parseJson } from 'json5';
 import {
-	getInput, setFailed, warning, startGroup, endGroup
+	getInput, setFailed, warning, startGroup, endGroup, info
 } from '@actions/core';
 import { context } from '@actions/github';
-import { parse as parseJson } from 'json5';
 import {git, github} from './github';
 import {npm} from './npm';
 
@@ -88,11 +89,14 @@ try {
 
 
 		startGroup(`Committing back versioned files into github release ${releaseData.semVerTag}`);
-		git.addAndCommit(files, `release-npm, bump version to ${releaseData.semVerTag}`);
+		const lastCommit = git.addAndCommit(files, `release-npm, bump version to ${releaseData.semVerTag}`);
+		info(`Committed new files, last commit log: ${EOL}${lastCommit}`);
+
 		git.tagHead(releaseData.tagName, `release-npm, release version ${releaseData.semVerTag}`);
 		git.push(gitRemote, releaseData.tagName, true, options.dryRun);
 
 		if (options.github.pushOrPRChanges === 'push') {
+			git.deleteTag(gitRemote, releaseData.fromBranch, options.dryRun);
 			git.push(gitRemote,  `HEAD:${releaseData.fromBranch}`, true, options.dryRun);
 		} else {
 			await github.createPullRequest(releaseData.tagName, releaseData.fromBranch, options.github, options.dryRun);
@@ -100,7 +104,7 @@ try {
 		endGroup();
 
 
-		startGroup(`Publishing npm package ${release.semVerTag}`);
+		startGroup(`Publishing npm package ${releaseData.semVerTag}`);
 		await npm.publish(releaseData.semVerTag, options.npm);
 		endGroup();
 	} catch (error) {
