@@ -84,6 +84,7 @@ try {
 
 
 		startGroup(`Creating new npm version for tag ${releaseData.semVerTag}`);
+		await npm.install(options.npm);
 		const files = await npm.version(releaseData.semVerTag, options.npm);
 		const lastCommit = git.addAndCommit(files, `release-npm, bump version to ${releaseData.semVerTag}`);
 		if (!lastCommit) {
