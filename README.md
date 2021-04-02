@@ -2,7 +2,7 @@
 This Github action releases a new version of an NPM package whenever a new release is done on Github.
 
 #### After a Github release is made, this action will;
-- Commit to you repository, updating the package.json
+- Commit to your repository, updating the package.json
 - Release a new version of an npm package using npm publish
 
 #### Example configuration
