@@ -17,10 +17,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: NPM version release
-        uses: ScientaNL/release-npm-github-action@1.1.0
+        uses: ScientaNL/release-npm-github-action@1.2.0
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
           npm-token: "${{ secrets.NPM_SCIENTA_TOKEN }}"
